@@ -41,7 +41,6 @@ public class AuthService {
                 .role(Role.USER)
                 .build();
 
-        // ici, AuditableEntity fields seront réglés via @PrePersist
         utilisateurRepository.save(utilisateur);
 
         String token = jwtService.generateToken(utilisateur.getEmail());

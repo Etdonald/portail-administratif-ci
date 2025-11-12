@@ -1,4 +1,4 @@
-package ci.gov.gestion_documents.controller;
+package ci.gov.gestion_documents.controlleur;
 
 import ci.gov.gestion_documents.dto.AuthRequest;
 import ci.gov.gestion_documents.dto.AuthResponse;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class AuthController {
 

@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Tableau de bord</h2>
+    <button class="btn btn-danger" (click)="logout()">Déconnexion</button>
+  </div>
+
+  @if (userRole === 'ROLE_ADMIN') {
+    <h4>Bienvenue Administrateur 👑</h4>
+    <p>Vous pouvez gérer et valider les demandes ici.</p>
+    <a routerLink="/admin/demandes" class="btn btn-primary mt-3">
+      <i class="fa fa-check-circle"></i> Gérer les demandes
+    </a>
+  }
+
+  @if (userRole === 'ROLE_USER') {
+    <h4>Bienvenue cher utilisateur 👋</h4>
+    <p>Faites vos demandes administratives ici.</p>
+
+    <div class="d-flex gap-3 mt-3">
+      <a routerLink="/user/demande/extrait" class="btn btn-outline-primary">
+        Demande d'extrait de naissance
+      </a>
+      <a routerLink="/user/demande/cni" class="btn btn-outline-success">
+        Demande de CNI
+      </a>
+      <a routerLink="/user/demande/permis" class="btn btn-outline-warning">
+        Demande de permis de conduire
+      </a>
+    </div>
+  }
+</div>
