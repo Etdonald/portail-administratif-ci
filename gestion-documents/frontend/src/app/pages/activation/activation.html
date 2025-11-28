@@ -1,0 +1,16 @@
+<div class="activation-container">
+  @if (loading) {
+    <div class="loading">
+      <i class="fa fa-spinner fa-spin"></i>
+      <p>Vérification du lien d’activation...</p>
+    </div>
+  } @else {
+    <div [class]="success ? 'success' : 'error'">
+      <i [class]="success ? 'fa fa-check-circle' : 'fa fa-times-circle'"></i>
+      <h2>{{ message }}</h2>
+      @if (success) {
+        <p>Redirection vers la page de connexion...</p>
+      }
+    </div>
+  }
+</div>

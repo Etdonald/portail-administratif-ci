@@ -1,0 +1,30 @@
+.activation-container {
+  text-align: center;
+  margin-top: 100px;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+}
+
+.loading {
+  font-size: 1.2rem;
+}
+
+.success {
+  color: #28a745;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.error {
+  color: #dc3545;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+i {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

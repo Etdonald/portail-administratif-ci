@@ -1,0 +1,114 @@
+/* -------- GLOBAL -------- */
+body {
+  background: #f5f7fa;
+  font-family: "Inter", sans-serif;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+}
+
+/* -------- BREADCRUMB -------- */
+.breadcrumb-modern .breadcrumb {
+  background: none;
+  padding: 0;
+}
+.breadcrumb-modern .breadcrumb-item a {
+  color: #6c757d;
+  text-decoration: none;
+}
+.breadcrumb-modern .breadcrumb-item a:hover {
+  color: #0d6efd;
+}
+.breadcrumb-modern .breadcrumb-item.active {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+/* -------- HEADERS & CARDS -------- */
+.page-header {
+  border-radius: 12px;
+}
+
+.card {
+  border-radius: 14px;
+  border: none;
+}
+
+.section-header {
+  padding: 0.9rem 1.2rem;
+  border-radius: 14px 14px 0 0 !important;
+  font-weight: 500;
+}
+
+.section-card .card-body {
+  padding: 1.3rem;
+}
+
+/* -------- FORM INPUTS -------- */
+.form-control, .form-select, textarea {
+  border-radius: 8px;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.2);
+  border-color: #0d6efd;
+}
+
+/* -------- OPTION TILE SELECTION -------- */
+.option-tile {
+  position: relative;
+  cursor: pointer;
+}
+
+.option-input {
+  display: none;
+}
+
+.option-content {
+  border: 2px solid transparent;
+  background: #f0f2f5;
+  border-radius: 12px;
+  transition: 0.25s ease;
+}
+
+.option-content:hover {
+  background: #e7efff;
+  border-color: #0d6efd;
+}
+
+.option-input:checked + .option-content {
+  border-color: #0d6efd;
+  background: #dceaff;
+  box-shadow: 0 4px 20px rgba(13,110,253,0.2);
+}
+
+/* -------- BUTTONS -------- */
+.btn-success {
+  padding: 0.6rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #198754, #0f6d3a);
+  border: none;
+}
+.btn-success:hover {
+  background: linear-gradient(135deg, #157347, #0e5f33);
+  transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+  border-radius: 10px;
+}
+
+/* -------- SIDEBAR -------- */
+.sticky-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+/* -------- PROGRESS -------- */
+.progress {
+  height: 8px;
+  border-radius: 6px;
+}
+

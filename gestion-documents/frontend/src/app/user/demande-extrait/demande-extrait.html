@@ -1,0 +1,394 @@
+<div class="page-wrapper py-4">
+  <div class="container">
+
+    <nav aria-label="breadcrumb" class="breadcrumb-modern mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/acceuil">Accueil</a></li>
+        <li class="breadcrumb-item"><a routerLink="/acceuil">Mes demandes</a></li>
+        <li class="breadcrumb-item active">Extrait de Naissance</li>
+      </ol>
+    </nav>
+
+    <div class="page-header card shadow-sm mb-4 border-0" style="background: linear-gradient(135deg, #1e5b2a 0%, #2d7d3e 100%);">
+      <div class="card-body text-white">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <div class="mairie-logo bg-white rounded-circle p-3 shadow">
+              <i class="fas fa-landmark text-success fa-2x"></i>
+            </div>
+          </div>
+          <div class="col">
+            <h1 class="h3 fw-bold mb-1">
+              <i class="fas fa-birthday-cake me-2"></i> Demande d'Extrait de Naissance
+            </h1>
+            <p class="mb-0 opacity-75">Mairie de Cocody - Abidjan, Côte d'Ivoire</p>
+          </div>
+          <div class="col-auto">
+            <span class="badge bg-light text-success px-3 py-2">
+              <i class="fas fa-shield-alt me-1"></i> Service Sécurisé
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8">
+        <form [formGroup]="extraitForm" (ngSubmit)="onSubmit()">
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header text-white" style="background: linear-gradient(135deg, #2d7d3e 0%, #3c9e4f 100%);">
+              <h5 class="mb-0"><i class="fas fa-baby me-2"></i> Informations sur la Naissance</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nom de famille *</label>
+                  <input type="text" class="form-control" formControlName="nom"
+                         [class.is-invalid]="f['nom'].touched && f['nom'].invalid"
+                         placeholder="Entrez le nom de famille">
+                  @if (f['nom'].touched && f['nom'].invalid) {
+                    <div class="invalid-feedback">Le nom de famille est requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Prénom(s) *</label>
+                  <input type="text" class="form-control" formControlName="prenoms"
+                         [class.is-invalid]="f['prenoms'].touched && f['prenoms'].invalid"
+                         placeholder="Entrez le(s) prénom(s)">
+                  @if (f['prenoms'].touched && f['prenoms'].invalid) {
+                    <div class="invalid-feedback">Le(s) prénom(s) est(sont) requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Date de naissance *</label>
+                  <input type="date" class="form-control" formControlName="dateNaissance"
+                         [class.is-invalid]="f['dateNaissance'].touched && f['dateNaissance'].invalid">
+                  @if (f['dateNaissance'].touched && f['dateNaissance'].invalid) {
+                    <div class="invalid-feedback">La date de naissance est requise.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Lieu de naissance *</label>
+                  <input type="text" class="form-control" formControlName="lieuNaissance"
+                         [class.is-invalid]="f['lieuNaissance'].touched && f['lieuNaissance'].invalid"
+                         placeholder="Ex: CHU de Cocody" value="Abidjan">
+                  @if (f['lieuNaissance'].touched && f['lieuNaissance'].invalid) {
+                    <div class="invalid-feedback">Le lieu de naissance est requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Sexe *</label>
+                  <select class="form-select" formControlName="sexe"
+                          [class.is-invalid]="f['sexe'].touched && f['sexe'].invalid">
+                    <option value="">Sélectionnez...</option>
+                    <option value="M">Masculin</option>
+                    <option value="F">Féminin</option>
+                  </select>
+                  @if (f['sexe'].touched && f['sexe'].invalid) {
+                    <div class="invalid-feedback">Veuillez sélectionner le sexe.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Numéro d'acte de naissance</label>
+                  <input type="text" class="form-control" formControlName="numeroActe"
+                         placeholder="Si connu">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header text-white" style="background: linear-gradient(135deg, #1e5b2a 0%, #2d7d3e 100%);">
+              <h5 class="mb-0"><i class="fas fa-users me-2"></i> Informations des Parents</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nom du père *</label>
+                  <input type="text" class="form-control" formControlName="nomPere"
+                         [class.is-invalid]="f['nomPere'].touched && f['nomPere'].invalid"
+                         placeholder="Nom complet du père">
+                  @if (f['nomPere'].touched && f['nomPere'].invalid) {
+                    <div class="invalid-feedback">Le nom du père est requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Prénom(s) du père *</label>
+                  <input type="text" class="form-control" formControlName="prenomsPere"
+                         [class.is-invalid]="f['prenomsPere'].touched && f['prenomsPere'].invalid"
+                         placeholder="Prénom(s) du père">
+                  @if (f['prenomsPere'].touched && f['prenomsPere'].invalid) {
+                    <div class="invalid-feedback">Le(s) prénom(s) du père est(sont) requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Nom de la mère *</label>
+                  <input type="text" class="form-control" formControlName="nomMere"
+                         [class.is-invalid]="f['nomMere'].touched && f['nomMere'].invalid"
+                         placeholder="Nom de jeune fille de la mère">
+                  @if (f['nomMere'].touched && f['nomMere'].invalid) {
+                    <div class="invalid-feedback">Le nom de la mère est requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Prénom(s) de la mère *</label>
+                  <input type="text" class="form-control" formControlName="prenomsMere"
+                         [class.is-invalid]="f['prenomsMere'].touched && f['prenomsMere'].invalid"
+                         placeholder="Prénom(s) de la mère">
+                  @if (f['prenomsMere'].touched && f['prenomsMere'].invalid) {
+                    <div class="invalid-feedback">Le(s) prénom(s) de la mère est(sont) requis.</div>
+                  }
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label">Profession des parents</label>
+                  <input type="text" class="form-control" formControlName="professionParents"
+                         placeholder="Profession des parents au moment de la naissance">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INFORMATIONS DU DEMANDEUR -->
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header text-white" style="background: linear-gradient(135deg, #3c9e4f 0%, #4bbf63 100%);">
+              <h5 class="mb-0"><i class="fas fa-user-circle me-2"></i> Informations du Demandeur</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Votre nom complet *</label>
+                  <input type="text" class="form-control" formControlName="demandeurNom"
+                         [class.is-invalid]="f['demandeurNom'].touched && f['demandeurNom'].invalid"
+                         placeholder="Votre nom complet">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Lien de parenté *</label>
+                  <select class="form-select" formControlName="lienParente"
+                          [class.is-invalid]="f['lienParente'].touched && f['lienParente'].invalid">
+                    <option value="">Sélectionnez...</option>
+                    <option value="CONCERNE">Personne concernée</option>
+                    <option value="PERE">Père</option>
+                    <option value="MERE">Mère</option>
+                    <option value="TUTEUR">Tuteur</option>
+                    <option value="AUTRE">Autre</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Téléphone *</label>
+                  <input type="tel" class="form-control" formControlName="telephone"
+                         [class.is-invalid]="f['telephone'].touched && f['telephone'].invalid"
+                         placeholder="Ex: 0123456789">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="email"
+                         placeholder="votre@email.com">
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label">Adresse *</label>
+                  <textarea class="form-control" rows="3" formControlName="adresse"
+                            [class.is-invalid]="f['adresse'].touched && f['adresse'].invalid"
+                            placeholder="Votre adresse complète"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header text-white" style="background: linear-gradient(135deg, #2d7d3e 0%, #3c9e4f 100%);">
+              <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> Type d'Extrait Demandé</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                @for (type of typesExtrait; track type.value) {
+                  <div class="col-md-4">
+                    <label class="option-tile w-100">
+                      <input type="radio"
+                             class="option-input"
+                             formControlName="typeExtrait"
+                             [id]="'type_' + type.value"
+                             [value]="type.value">
+                      <div class="option-content text-center p-3">
+                        <i class="fas fa-2x mb-2"
+                           [class.fa-file]="type.value === 'COPIE_INTEGRALE'"
+                           [class.fa-file-invoice]="type.value === 'EXTRATI_SANS_FILIATION'"
+                           [class.fa-file-medical]="type.value === 'EXTRATI_AVEC_FILIATION'"></i>
+                        <h6 class="mb-1">{{ type.label }}</h6>
+                        <small class="text-muted">{{ type.description }}</small>
+                      </div>
+                    </label>
+                  </div>
+                }
+              </div>
+              @if (f['typeExtrait'].touched && f['typeExtrait'].invalid) {
+                <div class="invalid-feedback d-block mt-2">Veuillez sélectionner un type d'extrait.</div>
+              }
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4 border-warning">
+            <div class="card-header bg-warning text-dark">
+              <h5 class="mb-0">
+                <i class="fas fa-paperclip me-2"></i>
+                Documents à Fournir
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <h6 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Documents requis :</h6>
+                <ul class="mb-0">
+                  <li>Photocopie de la pièce d'identité du demandeur</li>
+                  <li>Ancien extrait de naissance (si disponible)</li>
+                  <li>Acte de mariage des parents (pour certains cas)</li>
+                </ul>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Pièce d'identité *</label>
+                  <input type="file" class="form-control" accept="image/*,.pdf"
+                         (change)="onFileChange($event, 'pieceIdentite')">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Ancien extrait (si applicable)</label>
+                  <input type="file" class="form-control" accept="image/*,.pdf"
+                         (change)="onFileChange($event, 'ancienExtrait')">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header bg-dark text-white">
+              <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i> Déclarations</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" formControlName="certificationExactitude">
+                <label class="form-check-label">Je certifie sur l'honneur l'exactitude des informations fournies *</label>
+              </div>
+
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" formControlName="consentementTraitement">
+                <label class="form-check-label">J'autorise la Mairie de Cocody à traiter mes données personnelles *</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-3 mb-5">
+            <button type="button" class="btn btn-outline-secondary" routerLink="/acceuil">
+              <i class="fas fa-arrow-left me-1"></i> Retour
+            </button>
+
+            <button type="submit" class="btn btn-success px-4" [disabled]="isSubmitting">
+              @if (!isSubmitting) {
+                <i class="fas fa-paper-plane me-1"></i> Soumettre la demande
+              }
+              @if (isSubmitting) {
+                <i class="fas fa-spinner fa-spin me-1"></i> Envoi en cours...
+              }
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="sticky-sidebar">
+
+          <div class="card shadow-sm mb-4 border-success">
+            <div class="card-header bg-success text-white">
+              <h6 class="mb-0"><i class="fas fa-landmark me-2"></i> Mairie de Cocody</h6>
+            </div>
+            <div class="card-body small">
+              <div class="d-flex align-items-center mb-3">
+                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                <div>
+                  <strong>Adresse</strong><br>
+                  Boulevard de Marseille<br>
+                  Cocody, Abidjan
+                </div>
+              </div>
+              <div class="d-flex align-items-center mb-3">
+                <i class="fas fa-phone text-success me-2"></i>
+                <div>
+                  <strong>Téléphone</strong><br>
+                  +225 27 22 44 00 00
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-clock text-success me-2"></i>
+                <div>
+                  <strong>Horaires</strong><br>
+                  Lun-Ven: 7h30-16h30
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4 border-warning">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i> Informations importantes</h6>
+            </div>
+            <div class="card-body small">
+              <ul class="list-unstyled mb-0">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Délai de traitement : 3 à 5 jours</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Frais : 1 000 FCFA</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Documents originaux requis</li>
+                <li><i class="fas fa-check text-success me-2"></i> Retrait sur présentation du reçu</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="fas fa-question-circle me-2"></i> Besoin d'aide ?</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm">
+                  <i class="fas fa-phone me-1"></i> Nous appeler
+                </button>
+                <button class="btn btn-outline-success btn-sm">
+                  <i class="fas fa-envelope me-1"></i> Nous écrire
+                </button>
+                <button class="btn btn-outline-secondary btn-sm">
+                  <i class="fas fa-download me-1"></i> Guide PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="card-header bg-light">
+              <h6 class="mb-0 fw-semibold">Progression</h6>
+            </div>
+            <div class="card-body">
+              <div class="progress mb-2">
+                <div class="progress-bar bg-success" style="width: 100%"></div>
+              </div>
+              <span class="small text-muted"><i class="fas fa-check-circle me-1"></i> Formulaire complété</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

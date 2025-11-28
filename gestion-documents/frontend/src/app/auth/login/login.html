@@ -83,7 +83,6 @@
           type="submit"
           class="submit-button animate-drop"
           style="animation-delay: 0.8s"
-          [class.loading]="loading"
           [disabled]="loading"
         >
           <div class="button-bg"></div>
@@ -104,12 +103,14 @@
         </button>
       </form>
 
-      <!-- Lien mot de passe oublié -->
       <div class="auth-links animate-fade" style="animation-delay: 1s">
-        <a href="#" class="forgot-password">
+        <a routerLink="#" class="forgot-password">
           <i class="fa fa-question-circle"></i>
           Mot de passe oublié ?
         </a>
+          <a routerLink="/inscription" class="forgot-password">
+            <i class="fa fa-sign-up"></i>Inscrivez-vous
+          </a>
       </div>
     </div>
   </div>

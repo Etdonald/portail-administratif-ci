@@ -19,9 +19,15 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/inscription")
-    public ResponseEntity<AuthResponse> inscription(@RequestBody RegisterRequest request) {
-        AuthResponse response = authService.enregistrer(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> inscription(@RequestBody RegisterRequest request) {
+        authService.enregistrer(request);
+        return ResponseEntity.ok("Inscription réussie. Vérifiez votre email pour activer votre compte.");
+    }
+
+    @GetMapping("/activation")
+    public ResponseEntity<?> verifyCompte(@RequestParam("token") String token) {
+        authService.verifyToken(token);
+        return ResponseEntity.ok("Compte activé avec succès. Vous pouvez maintenant vous connecter !");
     }
 
     @PostMapping("/login")

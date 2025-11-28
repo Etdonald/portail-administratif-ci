@@ -10,4 +10,10 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private String token;
     private String tokenType = "Bearer";
+    private String message;
+
+    public AuthResponse(String jwtToken, String bearer) {
+        this.token = jwtToken;
+        this.tokenType = "Bearer";
+    }
 }

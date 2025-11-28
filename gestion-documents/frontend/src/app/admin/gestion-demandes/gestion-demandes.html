@@ -1,0 +1,354 @@
+<div class="container-fluid py-4">
+  <div class="container">
+    <!-- En-tête -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-primary text-white py-3">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <h1 class="h3 mb-0">
+                  <i class="fas fa-tasks me-2"></i>
+                  Gestion des Demandes
+                </h1>
+                <p class="mb-0 mt-2 opacity-75">
+                  Gérez et traitez toutes les demandes des utilisateurs
+                </p>
+              </div>
+              <div class="col-md-4 text-md-end">
+                <button class="btn btn-light" (click)="chargerDemandes()" [disabled]="isLoading">
+                  <i class="fas fa-sync-alt me-1" [class.fa-spin]="isLoading"></i>
+                  Actualiser
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="row mb-4">
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Total Demandes
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.total}}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-file-alt fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                  En Attente
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.enAttente}}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-clock fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                  Approuvées
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.approuvees}}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                  Rejetées
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{stats.rejetees}}</div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-times-circle fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtres -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-light">
+        <h6 class="mb-0">
+          <i class="fas fa-filter me-2"></i>
+          Filtres
+        </h6>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Statut</label>
+            <select class="form-select" [(ngModel)]="filtreStatut" (ngModelChange)="onFiltreChange()">
+              @for (statut of statuts; track statut.value) {
+                <option [value]="statut.value">{{statut.label}}</option>
+              }
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Recherche</label>
+            <input type="text" class="form-control" placeholder="Nom, prénom, email..."
+                   [(ngModel)]="recherche" (input)="onRechercheChange()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Liste des demandes -->
+    <div class="card shadow-sm">
+      <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">
+          <i class="fas fa-list me-2"></i>
+          Liste des Demandes ({{demandesFiltrees.length}})
+        </h6>
+        @if (isLoading) {
+          <div class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+        }
+      </div>
+      <div class="card-body p-0">
+        @if (demandesFiltrees.length === 0) {
+          <div class="text-center py-5">
+            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+            <h5 class="text-muted">Aucune demande trouvée</h5>
+            <p class="text-muted">Aucune demande ne correspond aux critères de recherche</p>
+          </div>
+        } @else {
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+              <tr>
+                <th>Utilisateur</th>
+                <th>Type</th>
+                <th>Date Soumission</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+                @for (demande of demandesFiltrees; track demande.id) {
+                  <tr [class.table-active]="demandeSelectionnee?.id === demande.id"
+                      (click)="selectionnerDemande(demande)" style="cursor: pointer;">
+                    <td>
+                      <div class="fw-bold">{{demande.prenoms}} {{demande.nom}}</div>
+                      <small class="text-muted">{{demande.email}}</small>
+                      <div class="small text-muted">{{demande.telephone}}</div>
+                    </td>
+                    <td>
+                      <span class="badge" [ngClass]="getTypeBadgeClass(demande.typeDemande)">
+                        <i class="fas me-1" [ngClass]="getIconeType(demande.typeDemande)"></i>
+                        {{demande.typeDemande}}
+                      </span>
+                      @if (demande.typeDemandeCni) {
+                        <br>
+                        <small class="text-muted">{{demande.typeDemandeCni}}</small>
+                      }
+                    </td>
+                    <td>
+                      {{demande.dateSoumission | date:'dd/MM/yyyy HH:mm'}}
+                    </td>
+                    <td>
+                      <span class="badge" [ngClass]="getBadgeClass(demande.statut)">
+                        {{demande.statut}}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="btn-group btn-group-sm">
+                        @if (demande.statut === 'EN_ATTENTE') {
+                          <button class="btn btn-success"
+                                  (click)="validerDemande(demande); $event.stopPropagation()"
+                                  title="Valider">
+                            <i class="fas fa-check"></i>
+                          </button>
+                          <button class="btn btn-danger"
+                                  (click)="rejeterDemande(demande); $event.stopPropagation()"
+                                  title="Rejeter">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        }
+                        <button class="btn btn-info"
+                                (click)="selectionnerDemande(demande); $event.stopPropagation()"
+                                title="Détails">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Détails de la demande sélectionnée -->
+    @if (demandeSelectionnee) {
+      <div class="card shadow-sm mt-4">
+        <div class="card-header bg-info text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">
+              <i class="fas fa-info-circle me-2"></i>
+              Détails de la Demande
+            </h6>
+            <div>
+              <span class="badge bg-light text-dark me-2">
+                {{demandeSelectionnee.typeDemande}}
+              </span>
+              @if (demandeSelectionnee.typeDemandeCni) {
+                <span class="badge bg-secondary text-white">
+                  {{demandeSelectionnee.typeDemandeCni}}
+                </span>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Informations Personnelles</h6>
+              <table class="table table-sm table-borderless">
+                <tr>
+                  <td class="fw-bold" width="40%">Nom complet:</td>
+                  <td>{{demandeSelectionnee.prenoms}} {{demandeSelectionnee.nom}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Profession:</td>
+                  <td>{{demandeSelectionnee.profession || 'Non renseigné'}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Sexe:</td>
+                  <td>{{demandeSelectionnee.sexe === 'M' ? 'Masculin' : 'Féminin'}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Date naissance:</td>
+                  <td>{{demandeSelectionnee.dateNaissance}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Lieu naissance:</td>
+                  <td>{{demandeSelectionnee.lieuNaissance}}</td>
+                </tr>
+                @if (demandeSelectionnee.taille) {
+                  <tr>
+                    <td class="fw-bold">Taille:</td>
+                    <td>{{demandeSelectionnee.taille}} m</td>
+                  </tr>
+                }
+                <tr>
+                  <td class="fw-bold">Nationalité:</td>
+                  <td>{{demandeSelectionnee.nationalite || 'Ivoirienne'}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <h6>Contact et Adresse</h6>
+              <table class="table table-sm table-borderless">
+                <tr>
+                  <td class="fw-bold" width="40%">Email:</td>
+                  <td>{{demandeSelectionnee.email}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Téléphone:</td>
+                  <td>{{demandeSelectionnee.telephone}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Adresse:</td>
+                  <td>{{demandeSelectionnee.adresse}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Ville:</td>
+                  <td>{{demandeSelectionnee.ville}}</td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Région:</td>
+                  <td>{{demandeSelectionnee.region}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Informations CNI générées (si validée et type CNI) -->
+          @if (demandeSelectionnee.statut === 'APPROUVEE' && demandeSelectionnee.typeDemande === 'CNI') {
+            <div class="row mt-3">
+              <div class="col-12">
+                <h6 class="text-success">
+                  <i class="fas fa-id-card me-2"></i>
+                  Informations CNI Générées
+                </h6>
+                <div class="row">
+                  <div class="col-md-3">
+                    <strong>Numéro CNI:</strong><br>
+                    <span class="text-primary fw-bold">{{demandeSelectionnee.numeroCNI || 'Non généré'}}</span>
+                  </div>
+                  <div class="col-md-3">
+                    <strong>Numéro NNI:</strong><br>
+                    <span class="text-primary fw-bold">{{demandeSelectionnee.numeroNNI || 'Non généré'}}</span>
+                  </div>
+                  <div class="col-md-3">
+                    <strong>Date émission:</strong><br>
+                    {{demandeSelectionnee.dateEmission || 'Non définie'}}
+                  </div>
+                  <div class="col-md-3">
+                    <strong>Date expiration:</strong><br>
+                    {{demandeSelectionnee.dateExpiration || 'Non définie'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- Commentaire admin (si rejetée) -->
+          @if (demandeSelectionnee.statut === 'REJETEE' && demandeSelectionnee.commentaireAdmin) {
+            <div class="row mt-3">
+              <div class="col-12">
+                <h6 class="text-danger">
+                  <i class="fas fa-comment me-2"></i>
+                  Motif du rejet
+                </h6>
+                <div class="alert alert-danger mb-0">
+                  {{demandeSelectionnee.commentaireAdmin}}
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

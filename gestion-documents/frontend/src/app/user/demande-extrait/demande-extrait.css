@@ -1,0 +1,45 @@
+/* Style spécifique pour la Mairie de Cocody */
+.mairie-logo {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-header {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.option-tile {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.option-tile:hover {
+  border-color: #2d7d3e;
+  transform: translateY(-2px);
+}
+
+.option-input:checked + .option-content {
+  background-color: #f8fff9;
+  border-color: #2d7d3e;
+}
+
+.option-content {
+  padding: 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.breadcrumb-modern .breadcrumb-item a {
+  color: #2d7d3e;
+  text-decoration: none;
+}
+
+.breadcrumb-modern .breadcrumb-item.active {
+  color: #1e5b2a;
+  font-weight: 500;
+}

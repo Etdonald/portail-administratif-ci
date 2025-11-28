@@ -1,0 +1,168 @@
+
+<div class="container-fluid py-4 bg-light min-vh-100">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+          <div class="card-header header-gradient text-white p-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+              <div class="mb-3 mb-md-0">
+                <h1 class="h2 mb-2 fw-bold">
+                  <i class="fas fa-folder-open me-3"></i>
+                  Mes Demandes
+                </h1>
+                <p class="mb-0 opacity-90">
+                  <i class="fas fa-info-circle me-2"></i>
+                  {{ demandesFiltrees.length }} demande(s) trouvée(s)
+                </p>
+              </div>
+              <div>
+                <button class="btn btn-light btn-lg rounded-pill px-4" (click)="chargerMesDemandes()" [disabled]="isLoading">
+                  <i class="fas fa-sync-alt me-2" [class.fa-spin]="isLoading"></i>
+                  Actualiser
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm mb-4 border-0 rounded-4">
+      <div class="card-body p-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-8">
+            <label class="form-label fw-semibold text-secondary mb-2">
+              <i class="fas fa-filter me-2"></i>Filtrer par type de demande
+            </label>
+            <select class="form-select form-select-lg rounded-3 border-2" [(ngModel)]="filtreType" (ngModelChange)="onFiltreChange()">
+              <option value="TOUS">Tous les types</option>
+              <option value="CNI">Carte Nationale d'Identité</option>
+              <option value="EXTRAIT">Extrait de naissance</option>
+              <option value="PERMIS">Permis de conduire</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <div class="d-grid gap-2">
+              <a routerLink="/user/demande/cni" class="btn btn-primary btn-lg rounded-3">
+                <i class="fas fa-plus-circle me-2"></i>Nouvelle demande
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if (isLoading) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary spinner-lg mb-3" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+        <h4 class="text-muted fw-light">Chargement de vos demandes...</h4>
+        <p class="text-muted small">Veuillez patienter un instant</p>
+      </div>
+    } @else if (demandes.length === 0) {
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body text-center py-5">
+          <div class="mb-4">
+            <i class="fas fa-inbox fa-4x text-muted opacity-50"></i>
+          </div>
+          <h3 class="fw-bold mb-3">Aucune demande enregistrée</h3>
+          <p class="text-muted mb-4">Vous n'avez soumis aucune demande pour le moment.</p>
+          <a routerLink="/user/demande/cni" class="btn btn-primary btn-lg rounded-pill px-5">
+            <i class="fas fa-plus-circle me-2"></i>
+            Faire ma première demande
+          </a>
+        </div>
+      </div>
+    } @else if (demandesFiltrees.length === 0) {
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body text-center py-5">
+          <div class="mb-4">
+            <i class="fas fa-search fa-4x text-warning"></i>
+          </div>
+          <h3 class="fw-bold mb-3">Aucun résultat trouvé</h3>
+          <p class="text-muted mb-4">Aucune demande ne correspond au filtre "{{filtreType}}".</p>
+          <button class="btn btn-outline-primary btn-lg rounded-pill px-4" (click)="filtreType = 'TOUS'; onFiltreChange()">
+            <i class="fas fa-list me-2"></i>
+            Voir toutes les demandes ({{demandes.length}})
+          </button>
+        </div>
+      </div>
+    } @else {
+      <div class="row g-4">
+        @for (demande of demandesFiltrees; track demande.id) {
+          <div class="col-lg-6 col-xl-4">
+            <div class="card h-100 border-0 shadow-hover rounded-4">
+              <div class="card-header bg-white border-0 p-3">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                  <span class="badge rounded-pill px-3 py-2 fs-6" [ngClass]="getTypeBadgeClass(demande.typeDemande)">
+                    <i class="fas me-2"
+                       [class.fa-id-card]="demande.typeDemande === 'CNI'"
+                       [class.fa-certificate]="demande.typeDemande === 'EXTRAIT'"
+                       [class.fa-car]="demande.typeDemande === 'PERMIS'"></i>
+                    {{demande.typeDemande}}
+                  </span>
+                  <span class="badge rounded-pill px-3 py-2 fs-6" [ngClass]="getBadgeClass(demande.statut)">
+                    <i class="fas fa-circle me-1 status-indicator"></i>
+                    {{demande.statut}}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Corps de la card -->
+              <div class="card-body p-4">
+                <h5 class="card-title fw-bold mb-3 text-dark">
+                  {{demande.prenoms}} {{demande.nom}}
+                </h5>
+
+                <div class="info-group mb-2">
+                  <div class="d-flex align-items-center text-muted mb-2">
+                    <i class="fas fa-calendar-alt me-3 text-primary icon-fixed"></i>
+                    <span class="small">Soumis le {{demande.dateSoumission | date:'dd/MM/yyyy à HH:mm'}}</span>
+                  </div>
+
+                  <div class="d-flex align-items-center text-muted mb-2">
+                    <i class="fas fa-envelope me-3 text-primary icon-fixed"></i>
+                    <span class="small email-text">{{demande.email}}</span>
+                  </div>
+
+                  @if (demande.typeDemandeCni) {
+                    <div class="d-flex align-items-center text-muted">
+                      <i class="fas fa-tag me-3 text-primary icon-fixed"></i>
+                      <span class="small">{{demande.typeDemandeCni}}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="card-footer bg-light border-0 p-3">
+                @if (demande.statut === 'APPROUVEE' && demande.cheminCniPdf) {
+                  <button class="btn btn-success w-100 rounded-3 py-2" (click)="telechargerPdf(demande)">
+                    <i class="fas fa-download me-2"></i>
+                    <span class="fw-semibold">Télécharger le document</span>
+                  </button>
+                } @else if (demande.statut === 'EN_ATTENTE') {
+                  <div class="alert alert-warning mb-0 py-2 rounded-3">
+                    <i class="fas fa-clock me-2"></i>
+                    <small>En cours de traitement</small>
+                  </div>
+                } @else if (demande.statut === 'REJETEE') {
+                  <div class="alert alert-danger mb-0 py-2 rounded-3">
+                    <i class="fas fa-times-circle me-2"></i>
+                    <small>Demande rejetée</small>
+                  </div>
+                } @else {
+                  <div class="alert alert-info mb-0 py-2 rounded-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <small>En cours de validation</small>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

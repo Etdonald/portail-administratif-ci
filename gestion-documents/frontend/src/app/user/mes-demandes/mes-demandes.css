@@ -1,0 +1,115 @@
+/* mes-demandes.component.css */
+
+/* ===================================
+   STYLES PERSONNALISÉS UNIQUEMENT
+   (Bootstrap gère le reste)
+   =================================== */
+
+/* Gradient de l'en-tête */
+.header-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Effet hover sur les cards */
+.shadow-hover {
+  transition: all 0.3s ease;
+}
+
+.shadow-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+/* Taille du spinner de chargement */
+.spinner-lg {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Icônes alignées */
+.icon-fixed {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Indicateur de statut */
+.status-indicator {
+  font-size: 0.5rem;
+}
+
+/* Email avec gestion overflow */
+.email-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Animation d'entrée des cards */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.5s ease both;
+}
+
+/* Animation décalée pour effet cascade */
+.col-lg-6:nth-child(1) .card,
+.col-xl-4:nth-child(1) .card { animation-delay: 0.1s; }
+
+.col-lg-6:nth-child(2) .card,
+.col-xl-4:nth-child(2) .card { animation-delay: 0.2s; }
+
+.col-lg-6:nth-child(3) .card,
+.col-xl-4:nth-child(3) .card { animation-delay: 0.3s; }
+
+.col-lg-6:nth-child(4) .card,
+.col-xl-4:nth-child(4) .card { animation-delay: 0.4s; }
+
+.col-lg-6:nth-child(5) .card,
+.col-xl-4:nth-child(5) .card { animation-delay: 0.5s; }
+
+.col-lg-6:nth-child(6) .card,
+.col-xl-4:nth-child(6) .card { animation-delay: 0.6s; }
+
+/* Hover sur les boutons */
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Focus personnalisé sur le select */
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+@media (max-width: 768px) {
+  .header-gradient {
+    padding: 1.5rem !important;
+  }
+
+  .header-gradient h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Stack les badges verticalement sur mobile */
+  .card-header .d-flex.flex-wrap {
+    gap: 0.5rem;
+  }
+}

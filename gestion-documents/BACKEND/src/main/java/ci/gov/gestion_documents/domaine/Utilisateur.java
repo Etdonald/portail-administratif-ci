@@ -20,8 +20,11 @@ public class Utilisateur extends AuditableEntity {
     private UUID id;
     private String nom;
     private String prenom;
+    @Column(unique = true)
     private String email;
     private String motDePasse;
+    private boolean actif;
+    private boolean emailVerifie = false;
 
     @Enumerated(EnumType.STRING)
     private Role role;

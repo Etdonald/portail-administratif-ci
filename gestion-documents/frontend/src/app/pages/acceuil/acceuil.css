@@ -1,0 +1,106 @@
+homepage {
+  font-family: 'Inter', sans-serif;
+}
+
+.hero-section {
+  height: 330px;
+  /*background: url('/assets/img/banner-gouv.webp') center/cover no-repeat;*/
+  position: relative;
+  color: white;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.hero-nav {
+  z-index: 10;
+  position: relative;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-top: 30px;
+  animation: fadeDown 0.8s ease;
+}
+
+.hero-sub {
+  font-size: 1.2rem;
+  opacity: .9;
+  animation: fadeIn 1.2s ease;
+}
+
+@keyframes fadeDown {
+  from { transform: translateY(-15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card-service {
+  text-align: center;
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.09);
+  transition: .3s;
+}
+
+.card-service:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+.icon {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  margin: auto;
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+}
+
+.btn-main {
+  display: inline-block;
+  padding: 8px 20px;
+  background: #0d6efd;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: .3s;
+}
+
+.btn-main:hover {
+  background: #084bb1;
+}
+
+.btn-secondary-main {
+  display: inline-block;
+  padding: 10px 22px;
+  background: #6c757d;
+  border-radius: 25px;
+  color: white;
+  text-decoration: none;
+}
+
+.admin .btn-main {
+  background: #198754;
+}

@@ -1,0 +1,320 @@
+<div class="page-wrapper py-4">
+  <div class="container">
+
+    <nav aria-label="breadcrumb" class="breadcrumb-modern mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/acceuil">Accueil</a></li>
+        <li class="breadcrumb-item"><a routerLink="/acceuil">Mes demandes</a></li>
+        <li class="breadcrumb-item active">Demande de CNI</li>
+      </ol>
+    </nav>
+
+    <div class="page-header card shadow-sm mb-4 border-0">
+      <div class="card-body d-flex flex-column flex-md-row justify-content-between">
+        <div>
+          <h1 class="h3 fw-bold mb-1">
+            <i class="fas fa-id-card me-2"></i> Demande de Carte Nationale d'Identité
+          </h1>
+          <p class="text-muted small mb-0">Formulaire officiel de demande de CNI ivoirienne</p>
+        </div>
+        <div class="mt-3 mt-md-0">
+          <span class="badge bg-soft-success text-success px-3 py-2">
+            <i class="fas fa-shield-alt me-1"></i> Sécurisé
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-8">
+
+        <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()">
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header bg-primary text-white">
+              <h5 class="mb-0"><i class="fas fa-tag me-2"></i> Type de Demande</h5>
+            </div>
+
+            <div class="card-body">
+              <div class="row g-3">
+                @for (type of typeDemandeCni; track type.value) {
+                  <div class="col-md-4">
+                    <label class="option-tile w-100">
+                      <input type="radio"
+                             class="option-input"
+                             formControlName="typeDemandeCni"
+                             [id]="'type_' + type.value"
+                             [value]="type.value">
+
+                      <div class="option-content text-center p-3">
+                        <i class="fas fa-2x mb-2"
+                           [class.fa-id-card]="type.value === 'PREMIERE_DEMANDE'"
+                           [class.fa-sync]="type.value === 'RENOUVELLEMENT'"
+                           [class.fa-copy]="type.value === 'DUPLICATA'"></i>
+                        <h6 class="mb-0">{{ type.label }}</h6>
+                      </div>
+                    </label>
+                  </div>
+                }
+              </div>
+
+              @if (f['typeDemandeCni'].touched && f['typeDemandeCni'].invalid) {
+                <div class="invalid-feedback d-block mt-2">Veuillez sélectionner un type de demande.</div>
+              }
+            </div>
+          </div>
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header bg-info text-white">
+              <h5 class="mb-0"><i class="fas fa-user me-2"></i> Informations Personnelles</h5>
+            </div>
+
+            <div class="card-body">
+              <div class="row g-3">
+
+                <div class="col-md-6">
+                  <label class="form-label">Nom *</label>
+                  <input type="text" class="form-control" formControlName="nom"
+                         [class.is-invalid]="f['nom'].touched && f['nom'].invalid">
+                  @if (f['nom'].touched && f['nom'].invalid) {
+                    <div class="invalid-feedback">Nom invalide.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Prénom(s) *</label>
+                  <input type="text" class="form-control" formControlName="prenoms"
+                         [class.is-invalid]="f['prenoms'].touched && f['prenoms'].invalid">
+                  @if (f['prenoms'].touched && f['prenoms'].invalid) {
+                    <div class="invalid-feedback">Champ requis.</div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Profession *</label>
+                  <input type="text" class="form-control" formControlName="profession"
+                         [class.is-invalid]="f['profession'].touched && f['profession'].invalid">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Sexe *</label>
+                  <select class="form-select" formControlName="sexe"
+                          [class.is-invalid]="f['sexe'].touched && f['sexe'].invalid">
+                    <option value="">Sélectionnez...</option>
+                    <option value="M">Masculin</option>
+                    <option value="F">Féminin</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Date de naissance *</label>
+                  <input type="date" class="form-control" formControlName="dateNaissance">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Lieu de naissance *</label>
+                  <input type="text" class="form-control" formControlName="lieuNaissance">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Taille (m) *</label>
+                  <input type="text" class="form-control" placeholder="1.76" formControlName="taille">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Nationalité *</label>
+                  <input type="text" class="form-control" formControlName="nationalite" readonly>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header bg-secondary text-white">
+              <h5 class="mb-0"><i class="fas fa-address-book me-2"></i> Adresse & Contact</h5>
+            </div>
+
+            <div class="card-body">
+              <div class="row g-3">
+
+                <div class="col-12">
+                  <label class="form-label">Adresse *</label>
+                  <textarea class="form-control" rows="3" formControlName="adresse"></textarea>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label">Ville *</label>
+                  <input type="text" class="form-control" formControlName="ville">
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label">Région *</label>
+                  <select class="form-select" formControlName="region">
+                    <option value="">Sélectionnez</option>
+                    @for (region of regions; track region) {
+                      <option [value]="region">{{ region }}</option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-md-4">
+                  <label class="form-label">Téléphone *</label>
+                  <input type="tel" class="form-control" formControlName="telephone">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label">Email *</label>
+                  <input type="email" class="form-control" formControlName="email">
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-danger text-white">
+              <h5 class="mb-0">
+                <i class="fas fa-paperclip me-2"></i>
+                Documents à Fournir
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Photo d'identité *</label>
+                  <input type="file" class="form-control"
+                         accept="image/*"
+                         (change)="onFileChange($event, 'photoIdentite')"
+                         [class.is-invalid]="!photoIdentite && (demandeForm.get('photoIdentite')?.touched || isSubmitting)">
+                  @if (!photoIdentite && (demandeForm.get('photoIdentite')?.touched || isSubmitting)) {
+                    <div class="invalid-feedback d-block">Photo d'identité requise</div>
+                  }
+                  @if (photoPreview) {
+                    <div class="mt-2">
+                      <img [src]="photoPreview" alt="Aperçu photo" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                      <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="removePhoto()">
+                        <i class="fas fa-times"></i> Supprimer
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">Ancienne CNI (si applicable)</label>
+                  <input type="file" class="form-control"
+                         accept="image/*"
+                         #ancienneCniInput
+                         (change)="onFileChange($event, 'ancienneCni')">
+                  @if (ancienneCniPreview) {
+                    <div class="mt-2">
+                      <img [src]="ancienneCniPreview" alt="Aperçu ancienne CNI" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                      <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="removeAncienneCni()">
+                        <i class="fas fa-times"></i> Supprimer
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                <div class="col-12">
+                  <div class="alert alert-info small">
+                    <strong>Spécifications de la photo :</strong>
+                    <ul class="mb-0">
+                      <li>Format : JPEG, PNG</li>
+                      <li>Taille max : 2MB</li>
+                      <li>Photo récente (moins de 6 mois)</li>
+                      <li>Fond blanc ou neutre</li>
+                      <li>Visage bien visible</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section-card shadow-sm mb-4">
+            <div class="card-header section-header bg-dark text-white">
+              <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i> Consentements</h5>
+            </div>
+
+            <div class="card-body">
+
+              <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" formControlName="consentementTraitement">
+                <label class="form-check-label">J'autorise le traitement de mes données *</label>
+              </div>
+
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" formControlName="consentementVerification">
+                <label class="form-check-label">Je certifie l'exactitude des informations *</label>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="d-flex gap-3 mb-5">
+            <button type="button" class="btn btn-outline-secondary" routerLink="/acceuil">
+              <i class="fas fa-arrow-left me-1"></i> Retour
+            </button>
+
+            <button type="submit" class="btn btn-success px-4" [disabled]="isSubmitting">
+              @if (!isSubmitting) {
+                <i class="fas fa-paper-plane me-1"></i> Soumettre
+              }
+              @if (isSubmitting) {
+                <i class="fas fa-spinner fa-spin me-1"></i> Envoi...
+              }
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+
+      <div class="col-lg-4">
+        <div class="sticky-sidebar">
+
+          <div class="card shadow-sm mb-4 border-warning">
+            <div class="card-header bg-warning text-dark">
+              <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i> Informations importantes</h6>
+            </div>
+            <div class="card-body small">
+              <ul class="list-unstyled">
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Documents originaux requis</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Délai : 15 jours</li>
+                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Frais : 5000 FCFA</li>
+                <li><i class="fas fa-check text-success me-2"></i> Photo récente obligatoire</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+              <h6 class="mb-0"><i class="fas fa-question-circle me-2"></i> Aide</h6>
+            </div>
+            <div class="card-body">
+              <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary btn-sm"><i class="fas fa-phone me-1"></i> Appeler</button>
+                <button class="btn btn-outline-success btn-sm"><i class="fas fa-envelope me-1"></i> Email</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="card-header bg-light">
+              <h6 class="mb-0 fw-semibold">Progression</h6>
+            </div>
+            <div class="card-body">
+              <div class="progress mb-2">
+                <div class="progress-bar bg-success" style="width: 100%"></div>
+              </div>
+              <span class="small text-muted"><i class="fas fa-check-circle me-1"></i> Formulaire complété</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

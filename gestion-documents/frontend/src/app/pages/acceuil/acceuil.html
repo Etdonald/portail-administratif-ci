@@ -1,31 +1,113 @@
-<div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Tableau de bord</h2>
-    <button class="btn btn-danger" (click)="logout()">Déconnexion</button>
-  </div>
+<div class="homepage">
 
-  @if (userRole === 'ROLE_ADMIN') {
-    <h4>Bienvenue Administrateur 👑</h4>
-    <p>Vous pouvez gérer et valider les demandes ici.</p>
-    <a routerLink="/admin/demandes" class="btn btn-primary mt-3">
-      <i class="fa fa-check-circle"></i> Gérer les demandes
-    </a>
-  }
+  <header class="hero-section">
+    <div class="hero-overlay"></div>
 
-  @if (userRole === 'ROLE_USER') {
-    <h4>Bienvenue cher utilisateur 👋</h4>
-    <p>Faites vos demandes administratives ici.</p>
+    <nav class="hero-nav container">
+      <div class="logo">
+        <i class="fas fa-shield-alt"></i> PDOCACI
+      </div>
 
-    <div class="d-flex gap-3 mt-3">
-      <a routerLink="/user/demande/extrait" class="btn btn-outline-primary">
-        Demande d'extrait de naissance
-      </a>
-      <a routerLink="/user/demande/cni" class="btn btn-outline-success">
-        Demande de CNI
-      </a>
-      <a routerLink="/user/demande/permis" class="btn btn-outline-warning">
-        Demande de permis de conduire
-      </a>
+      <div class="account">
+        <span>Bonjour, <strong>{{ userRole === 'ROLE_ADMIN' ? 'Administrateur' : 'Citoyen' }}</strong></span>
+        <button class="btn-logout" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </nav>
+
+    <div class="hero-content container text-center">
+      @if (userRole === 'ROLE_ADMIN') {
+        <h1 class="hero-title">Panneau Administrateur</h1>
+        <p class="hero-sub">Gérez, validez et contrôlez toutes les demandes officielles.</p>
+      }
+      @if (userRole === 'ROLE_USER') {
+        <h1 class="hero-title">Portail des Services Administratifs</h1>
+        <p class="hero-sub">Effectuez vos démarches en ligne en toute simplicité.</p>
+      }
     </div>
-  }
+  </header>
+
+  <div class="container mt-5">
+
+    <!-- MODE ADMIN -->
+    @if (userRole === 'ROLE_ADMIN') {
+      <div class="row justify-content-center">
+
+        <div class="col-md-4 mb-4">
+          <div class="card-service admin">
+            <div class="icon bg-success">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <h5>Gestion des Demandes</h5>
+            <p>Traitez, validez ou rejetez les demandes des citoyens.</p>
+            <a routerLink="/gestion-demandes" class="btn-main">Accéder</a>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card-service admin">
+            <div class="icon bg-primary">
+              <i class="fas fa-users"></i>
+            </div>
+            <h5>Gestion des Utilisateurs</h5>
+            <p>Gérez les comptes, rôles et permissions.</p>
+            <a routerLink="/gestion-utilisateurs" class="btn-main">Accéder</a>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card-service admin">
+            <div class="icon bg-warning">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h5>Statistiques</h5>
+            <p>Analysez les rapports d’activité du système.</p>
+            <a routerLink="/admin/statistiques" class="btn-main">Voir</a>
+          </div>
+        </div>
+
+      </div>
+    }
+
+    <!-- MODE USER -->
+    @if (userRole === 'ROLE_USER') {
+      <div class="row justify-content-center">
+
+        <div class="col-md-4 mb-4">
+          <div class="card-service">
+            <div class="icon bg-primary"><i class="fas fa-birthday-cake"></i></div>
+            <h5>Extrait de Naissance</h5>
+            <p>Demande d’extrait d’acte de naissance en ligne.</p>
+            <a routerLink="/demande-extrait" class="btn-main">Faire une demande</a>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card-service">
+            <div class="icon bg-success"><i class="fas fa-id-card"></i></div>
+            <h5>Carte Nationale d’Identité</h5>
+            <p>Demande ou renouvellement de votre CNI.</p>
+            <a routerLink="/demande-cni" class="btn-main">Faire une demande</a>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+          <div class="card-service">
+            <div class="icon bg-warning"><i class="fas fa-car"></i></div>
+            <h5>Permis de Conduire</h5>
+            <p>Demande ou renouvellement du permis.</p>
+            <a routerLink="/demande-permis" class="btn-main">Faire une demande</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-follow mt-4">
+        <h6><i class="fas fa-history"></i> Suivez vos démarches</h6>
+        <a routerLink="/mes-demandes" class="btn-secondary-main">Voir mes demandes</a>
+      </div>
+    }
+
+  </div>
 </div>

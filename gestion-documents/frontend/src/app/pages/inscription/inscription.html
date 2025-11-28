@@ -1,0 +1,149 @@
+<div class="auth-container">
+  <div class="floating-shapes">
+    <div class="shape circle"></div>
+    <div class="shape square"></div>
+    <div class="shape triangle"></div>
+    <div class="shape square-2"></div>
+  </div>
+
+  <div class="auth-wrapper register-layout">
+    <div class="auth-form">
+      <div class="form-header animate-fade" style="animation-delay: 0.3s">
+        <h1>Créer un compte</h1>
+        <p>Remplissez les informations ci-dessous</p>
+      </div>
+
+      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="input-field animate-drop" style="animation-delay: 0.4s">
+              <label for="nom">Nom :</label>
+              <input
+                id="nom"
+                name="nom"
+                type="text"
+                class="form-input"
+                [(ngModel)]="user.nom"
+                required
+                placeholder="Votre nom"
+              />
+            </div>
+
+            <div class="input-field animate-drop" style="animation-delay: 0.5s">
+              <label for="prenom">Prénom(s) :</label>
+              <input
+                id="prenom"
+                name="prenom"
+                type="text"
+                class="form-input"
+                [(ngModel)]="user.prenom"
+                required
+                placeholder="Votre prénom"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="input-field animate-drop full-width" style="animation-delay: 0.6s">
+              <label for="email">Adresse email :</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="form-input"
+                [(ngModel)]="user.email"
+                required
+                placeholder="votre.email@gmail.ci"
+              />
+            </div>
+          </div>
+
+          <!-- Ligne 3: Mot de passe et Confirmation -->
+          <div class="form-row">
+            <div class="input-field animate-drop" style="animation-delay: 0.7s">
+              <label for="motDePasse">Mot de passe :</label>
+              <div class="password-wrapper">
+                <input
+                  id="motDePasse"
+                  name="motDePasse"
+                  [type]="voirPassword ? 'text' : 'password'"
+                  class="form-input"
+                  [(ngModel)]="user.motDePasse"
+                  required
+                  placeholder="Mot de passe"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  (click)="changeVisibilitePassword()"
+                >
+                  <i [class]="voirPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="input-field animate-drop" style="animation-delay: 0.8s">
+              <label for="confirmationMotDePasse">Confirmation :</label>
+              <div class="password-wrapper">
+                <input
+                  id="confirmationMotDePasse"
+                  name="confirmationMotDePasse"
+                  [type]="voirConfirmePassword ? 'text' : 'password'"
+                  class="form-input"
+                  [(ngModel)]="user.confirmationMotDePasse"
+                  required
+                  placeholder="Confirmez"
+                />
+                <button
+                  type="button"
+                  class="toggle-password"
+                  (click)="changeVisibiliteConfirmePassword()"
+                >
+                  <i [class]="voirConfirmePassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="submit-button animate-drop"
+          style="animation-delay: 1s"
+          [disabled]="loading"
+        >
+          @if (!loading) {
+            <span class="button-content">
+              <i class="fa fa-user-plus"></i>
+              <span>S'inscrire</span>
+            </span>
+          }
+          @if (loading) {
+            <div class="loader">
+              <i class="fa fa-circle-notch fa-spin"></i>
+              <span>Création du compte...</span>
+            </div>
+          }
+        </button>
+      </form>
+
+      <div class="auth-links animate-fade" style="animation-delay: 1.2s">
+        <a routerLink="/login" class="forgot-password">
+          <i class="fa fa-sign-in"></i> Déjà inscrit ? Connectez-vous
+        </a>
+      </div>
+    </div>
+
+    <div class="auth-banner register-banner">
+      <div class="logo-container">
+        <img src="assets/images/" alt="Logo Gouvernement" class="logo-image animate-drop" />
+      </div>
+      <div class="welcome-text">
+        <h2 class="animate-fade">Bienvenue sur PDOCACI</h2>
+        <div class="typing-text animate-fade">
+          <span>Votre portail de gestion des documents administratifs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
